@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+}
+
+html, body {
+  height: 100vh;
+  color: white;
+  background: #306;
+}
+
+body, input, button, select {
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 1;
+  font-family: 'Nunito', sans-serif;
+}
+
