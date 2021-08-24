@@ -113,7 +113,7 @@ const Form = () => {
 
                 <div className={`${styles.inputBlock} col-md-6`}>
                   <label htmlFor="email">E-mail</label>
-                  <input type="text" id="email" name="email" className={styles.inputOptional} />
+                  <input type="email" id="email" name="email" className={styles.inputOptional} />
                 </div>
               </div>
             </fieldset>
