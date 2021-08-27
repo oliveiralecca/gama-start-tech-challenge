@@ -1,0 +1,114 @@
+{
+  "openapi": "3.0.0",
+
+  "info": {
+    "title": "API JobsNET Project",
+    "description": "API to save registers on JobsNET Platform",
+    "version": "0.0.1"
+  },
+
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Development"
+    }
+  ],
+
+  "paths": {
+    "/register": {
+      "post": {
+        "summary": "Candidate register",
+        "description": "User register route on JobNET form",
+        "tags": ["candidate"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "birth": {
+                    "type": "string"
+                  },
+                  "marital": {
+                    "type": "string"
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "neighborhood": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "cep": {
+                    "type": "string"
+                  },
+                  "phone1": {
+                    "type": "string"
+                  },
+                  "phone2": {
+                    "type": "string"
+                  },
+                  "cellphone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "identity": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "vehicle": {
+                    "type": "string"
+                  },
+                  "license": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Candidate": {
+                  "value": {
+                    "name": "Lorem Ipsum",
+                    "position": "Developer",
+                    "birth": "2021-08-19",
+                    "marital": "Single",
+                    "gender": "Female",
+                    "address": "St. A",
+                    "number": "123",
+                    "neighborhood": "Lake Side",
+                    "city": "Toronto",
+                    "cep": "29046120",
+                    "phone1": "12354756",
+                    "phone2": "12359026",
+                    "cellphone": "73638452841",                   
+                    "email": "lorem.ipsum@email.com",
+                    "identity": "84159572",
+                    "cpf": "74628502718",
+                    "vehicle": "Yes",
+                    "license": "B"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

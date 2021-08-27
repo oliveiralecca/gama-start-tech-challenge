@@ -65,6 +65,7 @@ const Form = () => {
     axios.post('http://localhost:3031/register', fields).then(response => {
       alert(response.data.data.length + ' cadastros!');
     })
+    console.log(fields)
   } 
 
   return (
@@ -120,7 +121,7 @@ const Form = () => {
 
                 <div className={`${styles.inputBlock} col-md-4`}>
                   <label htmlFor="cep">CEP<small> *</small></label>
-                  <input type="text" id="cep" name="cep" onChange={handleInputChange} onBlur={getCEP} required />
+                  <input type="text" id="cep" name="cep" placeholder="Only numbers" onChange={handleInputChange} onBlur={getCEP} required />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-8`}>
@@ -145,17 +146,17 @@ const Form = () => {
 
                 <div className={`${styles.inputBlock} col-md-4`}>
                   <label htmlFor="phone1">Phone 1</label>
-                  <input type="text" id="phone1" name="phone1" className={styles.inputOptional} onChange={handleInputChange} />
+                  <input type="text" id="phone1" name="phone1" placeholder="Only numbers" className={styles.inputOptional} onChange={handleInputChange} />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-4`}>
                   <label htmlFor="phone2">Phone 2</label>
-                  <input type="text" id="phone2" name="phone2" className={styles.inputOptional} onChange={handleInputChange} />
+                  <input type="text" id="phone2" name="phone2" placeholder="Only numbers" className={styles.inputOptional} onChange={handleInputChange} />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-4`}>
                   <label htmlFor="cellphone">Cell Phone<small> *</small></label>
-                  <input type="text" id="cellphone" name="cellphone" onChange={handleInputChange} required />
+                  <input type="text" id="cellphone" name="cellphone" placeholder="Only numbers" onChange={handleInputChange} required />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-12`}>
@@ -170,36 +171,35 @@ const Form = () => {
               <div className="row">
                 <div className={`${styles.inputBlock} col-md-6`}>
                   <label htmlFor="identity">ID</label>
-                  <input type="text" id="identity" name="identity" className={styles.inputOptional} onChange={handleInputChange} />
+                  <input type="text" id="identity" name="identity" placeholder="Only numbers" className={styles.inputOptional} onChange={handleInputChange} />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-6`}>
                   <label htmlFor="cpf">CPF<small> *</small></label>
-                  <input type="text" id="cpf" name="cpf" onChange={handleInputChange} required />
+                  <input type="text" id="cpf" name="cpf" placeholder="Only numbers" onChange={handleInputChange} required />
+                </div>
+               
+                <div className={`${styles.inputBlock} col-md-6`}>
+                  <label>Vehicle</label>
+                  <select id="vehicle" name="vehicle" defaultValue="0" onChange={handleInputChange}>
+                    <option disabled value="0">Select</option>
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                  </select>
                 </div>
 
-                <div className={styles.docs}>
-                  <div className={styles.inputBlock}>
-                    <label>Vehicle</label>
-                    <select id="vehicle" name="vehicle" defaultValue="0" onChange={handleInputChange}>
-                      <option disabled value="0">Select</option>
-                      <option value="1">Yes</option>
-                      <option value="2">No</option>
-                    </select>
-                  </div>
-
-                  <div className={styles.inputBlock}>
-                    <label>Driving License</label>
-                    <select id="license" name="license" defaultValue="0" onChange={handleInputChange}>
-                      <option disabled value="0">Select</option>
-                      <option value="1">A</option>
-                      <option value="2">B</option>
-                      <option value="3">C</option>
-                      <option value="4">D</option>
-                      <option value="5">E</option>
-                    </select>
-                  </div>
+                <div className={`${styles.inputBlock} col-md-6`}>
+                  <label>Driving License</label>
+                  <select id="license" name="license" defaultValue="0" onChange={handleInputChange}>
+                    <option disabled value="0">Select</option>
+                    <option value="1">A</option>
+                    <option value="2">B</option>
+                    <option value="3">C</option>
+                    <option value="4">D</option>
+                    <option value="5">E</option>
+                  </select>
                 </div>
+                
               </div>
             </fieldset>
 
