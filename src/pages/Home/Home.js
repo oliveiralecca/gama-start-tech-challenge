@@ -16,7 +16,7 @@ const Home = () => {
           <h1 className={styles.animateUp}>Find your perfect Job</h1>      
           <section className={styles.button}>
             <p className={styles.animateUp}>Fill out the form and wait for a interview.</p>     
-            <Link to="/form" className={styles.animateUp}>REGISTER&nbsp;<i className="fas fa-arrow-circle-right"></i></Link>
+            <Link to="/register" className={styles.animateUp}>REGISTER&nbsp;<i className="fas fa-arrow-circle-right"></i></Link>
           </section>
         </main>
       </div>

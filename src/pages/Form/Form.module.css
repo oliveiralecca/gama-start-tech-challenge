@@ -110,10 +110,6 @@ fieldset legend {
   outline: none;
 }
 
-#birth select {
-  margin: 0 .6rem 0 0 !important;
-}
-
 .docs,
 .personal {
   display: flex;

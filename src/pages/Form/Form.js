@@ -2,11 +2,54 @@ import React from 'react';
 import logo from '../../images/logo.png';
 import styles from './Form.module.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Form = () => {
-  const days = Array.from({length: 31}, (_, i) => i + 1);
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const years = Array.from(Array(33).keys()).map(i => 1971 + i);
+  const [fields, setFields] = React.useState({
+    name: '',
+    position: '',
+    birth: '',
+    marital: '0',
+    gender: '0',
+    address: '',
+    number: '',
+    neighborhood: '',
+    city: '',
+    cep: '',
+    phone1: '',
+    phone2: '',
+    cellphone: '',
+    email: '',
+    identity: '',
+    cpf: '',
+    vehicle: '0',
+    license: '0'
+  });
+
+  function handleInputChange(event){
+    fields[event.target.name] = event.target.value;
+    setFields(fields);  
+  }
+
+  function getCEP(event) {
+    axios.get(`http://viacep.com.br/ws/${event.target.value}/json/`).then(response => {
+      fields.address = response.data.logradouro;
+      fields.neighborhood = response.data.bairro;
+      fields.city = response.data.localidade;
+
+      const address = document.querySelector('#address');
+      address.value = fields.address;
+      const neighborhood = document.querySelector('#neighborhood');
+      neighborhood.value = fields.neighborhood;
+      const city = document.querySelector('#city');
+      city.value = fields.city;
+    })
+  }
+
+  function handleFormSubmit(event){
+    event.preventDefault();
+    console.log(fields);
+  } 
 
   return (
     <div id={styles.formPage}>
@@ -17,47 +60,30 @@ const Form = () => {
         </header>
       
         <main>
-          <form>
+          <form onSubmit={handleFormSubmit}>
             <fieldset>
               <legend>Personal Data</legend>
               <div className="row">
                 <div className={`${styles.inputBlock} col-md-6`}>
                   <label htmlFor="name">Full Name<small> *</small></label>
-                  <input type="text" id="name" name="name" required />
+                  <input type="text" id="name" name="name" onChange={handleInputChange} required />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-6`}>
-                  <label htmlFor="position">Intended Position</label>
-                  <input type="text" id="position" name="position" className={styles.inputOptional} />
+                  <label htmlFor="position">Intended Position<small> *</small></label>
+                  <input type="text" id="position" name="position" onChange={handleInputChange} required />
                 </div>   
 
-                <div id={styles.birth} className={`${styles.inputBlock} col-md-6`}>
-                  <label>Birth Date<small> *</small></label>
-                  <select defaultValue="" required>
-                    <option disabled value="">Month</option>
-                    {months.map((item, index) =>
-                      <option key={item} value={`${index+1}`}>{item}</option>
-                    )}
-                  </select>
-                  <select defaultValue="" required>
-                    <option disabled value="">Day</option>
-                    {days.map(item =>
-                      <option key={item} value={item}>{item}</option>
-                    )}                  
-                  </select>
-                  <select defaultValue="" required>
-                    <option disabled value="">Year</option>
-                    {years.map(item =>
-                      <option key={item} value={item}>{item}</option>
-                    )}                 
-                  </select>              
+                <div className={`${styles.inputBlock} col-md-6`}>
+                  <label htmlFor="birth">Birth Date<small> *</small></label>
+                  <input type="date" id="birth" name="birth" onChange={handleInputChange} required />
                 </div> 
 
                 <div className={`${styles.personal} col-md-6`}>
                   <div className={styles.inputBlock}>
                     <label>Marital Status</label>
-                    <select defaultValue="">
-                      <option disabled value="">Select</option>
+                    <select id="marital" name="marital" defaultValue="0" onChange={handleInputChange}>
+                      <option disabled value="0">Select</option>
                       <option value="1">Single</option>
                       <option value="2">Married</option>
                       <option value="3">Divorced</option>
@@ -67,8 +93,8 @@ const Form = () => {
 
                   <div className={styles.inputBlock}>
                     <label>Gender</label>
-                    <select defaultValue="">
-                      <option disabled value="">Select</option>
+                    <select id="gender" name="gender" defaultValue="0" onChange={handleInputChange}>
+                      <option disabled value="0">Select</option>
                       <option value="1">Male</option>
                       <option value="2">Female</option>
                       <option value="3">Rather not answer</option>
@@ -76,44 +102,49 @@ const Form = () => {
                   </div>
                 </div>
 
-                <div className={`${styles.inputBlock} col-md-12`}>
-                  <label htmlFor="address">Address<small> *</small></label>
-                  <input type="text" id="address" name="address" required />
-                </div>
-
-                <div className={`${styles.inputBlock} col-md-6`}>
-                  <label htmlFor="neighborhood">Neighborhood<small> *</small></label>
-                  <input type="text" id="neighborhood" name="neighborhood" required />
-                </div>
-
-                <div className={`${styles.inputBlock} col-md-6`}>
-                  <label htmlFor="city">City<small> *</small></label>
-                  <input type="text" id="city" name="city" required />
-                </div>
-
                 <div className={`${styles.inputBlock} col-md-4`}>
-                  <label htmlFor="cep">CEP</label>
-                  <input type="text" id="cep" name="cep" className={styles.inputOptional} />
+                  <label htmlFor="cep">CEP<small> *</small></label>
+                  <input type="text" id="cep" name="cep" onChange={handleInputChange} onBlur={getCEP} required />
+                </div>
+
+                <div className={`${styles.inputBlock} col-md-8`}>
+                  <label htmlFor="address">Address<small> *</small></label>
+                  <input type="text" id="address" name="address" onChange={handleInputChange} required />
+                </div>
+
+                <div className={`${styles.inputBlock} col-md-5`}>
+                  <label htmlFor="neighborhood">Neighborhood<small> *</small></label>
+                  <input type="text" id="neighborhood" name="neighborhood" onChange={handleInputChange} required />
+                </div>
+
+                <div className={`${styles.inputBlock} col-md-5`}>
+                  <label htmlFor="city">City<small> *</small></label>
+                  <input type="text" id="city" name="city" onChange={handleInputChange} required />
+                </div>
+
+                <div className={`${styles.inputBlock} col-md-2`}>
+                  <label htmlFor="address">Number<small> *</small></label>
+                  <input type="text" id="number" name="number" onChange={handleInputChange} required />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-4`}>
                   <label htmlFor="phone1">Phone 1</label>
-                  <input type="text" id="phone1" name="phone1" className={styles.inputOptional} />
+                  <input type="text" id="phone1" name="phone1" className={styles.inputOptional} onChange={handleInputChange} />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-4`}>
                   <label htmlFor="phone2">Phone 2</label>
-                  <input type="text" id="phone2" name="phone2" className={styles.inputOptional} />
+                  <input type="text" id="phone2" name="phone2" className={styles.inputOptional} onChange={handleInputChange} />
+                </div>
+
+                <div className={`${styles.inputBlock} col-md-4`}>
+                  <label htmlFor="cellphone">Cell Phone<small> *</small></label>
+                  <input type="text" id="cellphone" name="cellphone" onChange={handleInputChange} required />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-6`}>
-                  <label htmlFor="cellphone">Cell Phone</label>
-                  <input type="text" id="cellphone" name="cellphone" className={styles.inputOptional} />
-                </div>
-
-                <div className={`${styles.inputBlock} col-md-6`}>
-                  <label htmlFor="email">E-mail</label>
-                  <input type="email" id="email" name="email" className={styles.inputOptional} />
+                  <label htmlFor="email">E-mail<small> *</small></label>
+                  <input type="email" id="email" name="email" onChange={handleInputChange} required />
                 </div>
               </div>
             </fieldset>
@@ -122,20 +153,20 @@ const Form = () => {
               <legend>Documents</legend>
               <div className="row">
                 <div className={`${styles.inputBlock} col-md-6`}>
-                  <label htmlFor="identity">ID<small> *</small></label>
-                  <input id="identity" name="identity" required />
+                  <label htmlFor="identity">ID</label>
+                  <input type="text" id="identity" name="identity" className={styles.inputOptional} onChange={handleInputChange} />
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-6`}>
                   <label htmlFor="cpf">CPF<small> *</small></label>
-                  <input id="cpf" name="cpf" required />
+                  <input type="text" id="cpf" name="cpf" onChange={handleInputChange} required />
                 </div>
 
                 <div className={styles.docs}>
                   <div className={styles.inputBlock}>
                     <label>Vehicle</label>
-                    <select defaultValue="">
-                      <option disabled value="">Select</option>
+                    <select id="vehicle" name="vehicle" defaultValue="0" onChange={handleInputChange}>
+                      <option disabled value="0">Select</option>
                       <option value="1">Yes</option>
                       <option value="2">No</option>
                     </select>
@@ -143,8 +174,8 @@ const Form = () => {
 
                   <div className={styles.inputBlock}>
                     <label>Driving License</label>
-                    <select defaultValue="">
-                      <option disabled value="">Select</option>
+                    <select id="license" name="license" defaultValue="0" onChange={handleInputChange}>
+                      <option disabled value="0">Select</option>
                       <option value="1">A</option>
                       <option value="2">B</option>
                       <option value="3">C</option>
