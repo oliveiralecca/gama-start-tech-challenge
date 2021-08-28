@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Form = () => {
+  const [error, setError] = React.useState(false);
+  const [cpfError, setCpfError] = React.useState(false);
+  const [cepError, setCepError] = React.useState(false);
+
   const [fields, setFields] = React.useState({
     name: '',
     position: '',
@@ -26,47 +30,110 @@ const Form = () => {
     license: '0'
   });
 
+  async function handleFormSubmit(event){
+    event.preventDefault();
+    try {
+      const user = await axios.post('http://localhost:5000/register', fields);
+      if (user.status === 200) {
+        alert('Candidate registered!');
+        window.location.reload();
+      }
+    } catch (error) {
+      setError(true);
+    } 
+  };
+
+  function cpfValidation(strCPF) {
+    if (strCPF !== 0) {
+      var Plus;
+      var Rest;
+      Plus = 0;
+      if (strCPF === "00000000000") return false;
+
+      for (var i=1; i<=9; i++) Plus = Plus + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+      Rest = (Plus * 10) % 11;
+
+      if ((Rest === 10) || (Rest === 11))  Rest = 0;
+      if (Rest !== parseInt(strCPF.substring(9, 10)) ) return false;
+
+      Plus = 0;
+      for (i = 1; i <= 10; i++) Plus = Plus + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+      Rest = (Plus * 10) % 11;
+
+      if ((Rest === 10) || (Rest === 11))  Rest = 0;
+      if (Rest !== parseInt(strCPF.substring(10, 11) ) ) return false;
+      return true;
+    }    
+  }
+
+  function cpfCheck(event) {
+    let cpf = event.target.value;
+    if (cpf.length !== 0) {
+      const checkResult = cpfValidation(cpf);  
+      if (checkResult) {
+        setCpfError(false);
+      } else {
+        setCpfError(true);
+      };
+    };    
+  };
+
   function handleInputChange(event){
     fields[event.target.name] = event.target.value;
     setFields(fields);  
-  }
+  };
 
   function getCEP(event) {
-    axios.get(`http://viacep.com.br/ws/${event.target.value}/json/`).then(response => {
-      fields.address = response.data.logradouro;
-      fields.neighborhood = response.data.bairro;
-      fields.city = response.data.localidade;
+    if (event.target.value.length !== 0) {
+      axios.get(`http://viacep.com.br/ws/${event.target.value}/json/`).then(response => {
+        fields.address = response.data.logradouro;
+        fields.neighborhood = response.data.bairro;
+        fields.city = response.data.localidade;
 
-      const address = document.querySelector('#address');
-      if (fields.address !== undefined) {
-        address.value = fields.address;
-      } else {
-        address.value = ''
-      }
+        const address = document.querySelector('#address');
+        if (fields.address !== undefined) {
+          address.value = fields.address;
+          setCepError(false);
+        } else {
+          setCepError(true);
+          address.value = '';
+        }
 
-      const neighborhood = document.querySelector('#neighborhood');
-      if (fields.neighborhood !== undefined) {
-        neighborhood.value = fields.neighborhood;
-      } else {
-        neighborhood.value = ''
-      }
-          
-      const city = document.querySelector('#city');
-      if (fields.neighborhood !== undefined) {
-        city.value = fields.city;
-      } else {
-        city.value = ''
-      }      
-    })
-  }
+        const neighborhood = document.querySelector('#neighborhood');
+        if (fields.neighborhood !== undefined) {
+          neighborhood.value = fields.neighborhood;
+        } else {
+          neighborhood.value = '';
+        }
+            
+        const city = document.querySelector('#city');
+        if (fields.neighborhood !== undefined) {
+          city.value = fields.city;
+        } else {
+          city.value = '';
+        }      
+      });
+    };
+  };
 
-  function handleFormSubmit(event){
-    event.preventDefault();
-    axios.post('http://localhost:3031/register', fields).then(response => {
-      alert(response.data.data.length + ' cadastros!');
-    })
-    console.log(fields)
-  } 
+  function handleCepChange(event) {
+    if (event.target.value.length !== 0 && event.target.value.length === 8) {
+      handleInputChange(event);
+      getCEP(event);
+    } else {
+      setCepError(false);
+    };
+  };
+
+  function handleCpfChange(event) {
+    if (event.target.value.length !== 0 && event.target.value.length === 11) {
+      handleInputChange(event);
+      cpfCheck(event);
+    } else {
+      setCpfError(false);
+      setError(false);
+    };
+  };
 
   return (
     <div id={styles.formPage}>
@@ -121,7 +188,8 @@ const Form = () => {
 
                 <div className={`${styles.inputBlock} col-md-4`}>
                   <label htmlFor="cep">CEP<small> *</small></label>
-                  <input type="text" id="cep" name="cep" placeholder="Only numbers" onChange={handleInputChange} onBlur={getCEP} required />
+                  <input type="text" id="cep" name="cep" placeholder="Only numbers" maxLength="8" onChange={handleCepChange} required />
+                  {cepError ? <p style={{color: "tomato", textAlign: "center", marginTop: "10px"}}><i className="fas fa-exclamation-circle"></i> CEP do not exist! Try again.</p> : ''}
                 </div>
 
                 <div className={`${styles.inputBlock} col-md-8`}>
@@ -176,7 +244,9 @@ const Form = () => {
 
                 <div className={`${styles.inputBlock} col-md-6`}>
                   <label htmlFor="cpf">CPF<small> *</small></label>
-                  <input type="text" id="cpf" name="cpf" placeholder="Only numbers" onChange={handleInputChange} required />
+                  <input type="text" id="cpf" name="cpf" placeholder="Only numbers" maxLength="11" onChange={handleCpfChange} required />
+                  {error ? <p style={{color: "tomato", textAlign: "center", marginTop: "10px"}}><i className="fas fa-exclamation-circle"></i> CPF already registered</p> : ''}
+                  {cpfError ? <p style={{color: "tomato", textAlign: "center", marginTop: "10px"}}><i className="fas fa-exclamation-circle"></i> CPF do not exist</p> : ''}                  
                 </div>
                
                 <div className={`${styles.inputBlock} col-md-6`}>
