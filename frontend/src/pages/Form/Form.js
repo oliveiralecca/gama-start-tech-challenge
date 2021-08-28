@@ -33,7 +33,7 @@ const Form = () => {
   async function handleFormSubmit(event){
     event.preventDefault();
     try {
-      const user = await axios.post('http://localhost:5000/register', fields);
+      const user = await axios.post('https://start-tech-jobsnet.herokuapp.com/register', fields);
       if (user.status === 200) {
         alert('Candidate registered!');
         window.location.reload();
@@ -85,7 +85,7 @@ const Form = () => {
 
   function getCEP(event) {
     if (event.target.value.length !== 0) {
-      axios.get(`http://viacep.com.br/ws/${event.target.value}/json/`).then(response => {
+      axios.get(`https://viacep.com.br/ws/${event.target.value}/json/`).then(response => {
         fields.address = response.data.logradouro;
         fields.neighborhood = response.data.bairro;
         fields.city = response.data.localidade;
