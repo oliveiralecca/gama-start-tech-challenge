@@ -1,5 +1,14 @@
 A empresa JobsNET, especialista em recrutamento e seleção de profissionais nas mais diversas áreas, solicitou para a nossa fábrica de software o desenvolvimento de uma página para atrair profissionais e conectá-los a oportunidades de emprego.
 
+---
+
+[ Front-end ] Feito em ReactJS<br>
+[ Back-end ] Feito em Node.js<br>
+[ Banco de Dados ] MongoDB Atlas (cloud com AWS)<br>
+[ Deploy ] Back-end no Heroku e Front-end no Netlify
+
+## Acesse em: [![Netlify Status](https://api.netlify.com/api/v1/badges/5d9a3649-3dd0-40b1-be0f-1dba13ce8ddc/deploy-status)](https://start-tech-jobnet.netlify.app/)
+
 ### **Frontend**
 
 ### **Fase 1 - Criação da Página**
