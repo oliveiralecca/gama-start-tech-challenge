@@ -36,7 +36,7 @@ const Form = () => {
       const user = await axios.post('https://start-tech-jobsnet.herokuapp.com/register', fields);
       if (user.status === 200) {
         alert('Candidate registered!');
-        window.location.reload();
+        window.location.href = "/";
       }
     } catch (error) {
       setError(true);
