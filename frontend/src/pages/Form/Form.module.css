@@ -199,4 +199,9 @@ fieldset legend {
     padding-left: 30px;
     padding-right: 30px;
   }
+
+  .personal {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
