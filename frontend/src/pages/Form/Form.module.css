@@ -191,3 +191,12 @@ fieldset legend {
 .button a:hover {
   background: #96FEFF;
 }
+
+/* Responsive */
+@media only screen and (max-width: 992px) {
+  form {
+    width: 90vw;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
