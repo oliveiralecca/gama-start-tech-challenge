@@ -162,30 +162,28 @@ const Form = () => {
                   <label htmlFor="birth">Birth Date<small> *</small></label>
                   <input type="date" id="birth" name="birth" onChange={handleInputChange} required />
                 </div> 
-
-                <div className={`${styles.personal} col-md-6`}>
-                  <div className={styles.inputBlock}>
-                    <label>Marital Status</label>
-                    <select id="marital" name="marital" defaultValue="0" onChange={handleInputChange}>
-                      <option disabled value="0">Select</option>
-                      <option value="1">Single</option>
-                      <option value="2">Married</option>
-                      <option value="3">Divorced</option>
-                      <option value="4">Widower</option>
-                    </select>
-                  </div>
-
-                  <div className={styles.inputBlock}>
-                    <label>Gender</label>
-                    <select id="gender" name="gender" defaultValue="0" onChange={handleInputChange}>
-                      <option disabled value="0">Select</option>
-                      <option value="1">Male</option>
-                      <option value="2">Female</option>
-                      <option value="3">Rather not answer</option>
-                    </select>
-                  </div>
+                
+                <div className={`${styles.inputBlock} col-md-3`}>
+                  <label>Marital Status</label>
+                  <select id="marital" name="marital" defaultValue="0" onChange={handleInputChange}>
+                    <option disabled value="0">Select</option>
+                    <option value="1">Single</option>
+                    <option value="2">Married</option>
+                    <option value="3">Divorced</option>
+                    <option value="4">Widower</option>
+                  </select>
                 </div>
 
+                <div className={`${styles.inputBlock} col-md-3`}>
+                  <label>Gender</label>
+                  <select id="gender" name="gender" defaultValue="0" onChange={handleInputChange}>
+                    <option disabled value="0">Select</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                    <option value="3">Rather not answer</option>
+                  </select>
+                </div>
+                
                 <div className={`${styles.inputBlock} col-md-4`}>
                   <label htmlFor="cep">CEP<small> *</small></label>
                   <input type="text" id="cep" name="cep" placeholder="Only numbers" maxLength="8" onChange={handleCepChange} required />
