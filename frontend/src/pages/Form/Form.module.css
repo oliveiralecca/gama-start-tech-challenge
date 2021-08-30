@@ -114,17 +114,8 @@ fieldset legend {
   outline: none;
 }
 
-.personal {
-  display: flex;
-}
-
-.docs>div>select,
-.personal>div>select {
+.docs>div>select {
   width: 15.1rem;
-}
-
-.personal>div:last-child>select {
-  margin: 0;
 }
 
 .inputOptional {
@@ -198,10 +189,5 @@ fieldset legend {
     width: 90vw;
     padding-left: 30px;
     padding-right: 30px;
-  }
-
-  .personal {
-    display: flex;
-    flex-wrap: wrap;
   }
 }
